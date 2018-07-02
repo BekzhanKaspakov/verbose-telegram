@@ -1,0 +1,17 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication5", "WebApplication5.csproj", "{EDD2DF23-8FDF-42BA-862E-E0EB27773BFC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDD2DF23-8FDF-42BA-862E-E0EB27773BFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDD2DF23-8FDF-42BA-862E-E0EB27773BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDD2DF23-8FDF-42BA-862E-E0EB27773BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDD2DF23-8FDF-42BA-862E-E0EB27773BFC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
