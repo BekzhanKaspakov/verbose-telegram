@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <LangVersion>7.1</LangVersion>
     <UserSecretsId>aspnet-WebApplication5-1E54E159-BC87-470F-BCD4-09CE74F6B1DA</UserSecretsId>
   </PropertyGroup>
 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace WebApplication5.Migrations
 {
-    public partial class qwer : Migration
+    public partial class INIt : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

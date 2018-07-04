@@ -28,33 +28,52 @@ namespace WebApplication5.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
             var id = user.AppID; // Get user id:
-            var users = _context.ApplicationUser_Has_Protocols
+
+            if (User.IsInRole("Admin")){
+                var users = _context.Protocols
+                                .Include(o => o.Organization)
+                                .ToList();
+                var protocol = _context.Protocols.Include(p => p.Organization);
+                List<Protocol> protocols = await protocol.ToListAsync();
+                IndexViewModel model = new IndexViewModel();
+                model.list = new List<Prot>();
+                foreach (Protocol p in users)
+                {
+
+                    model.list.Add(new Prot
+                    {
+                        ProtocolId = p.Id,
+                        Description = p.Description,
+                        OrgName = p.Organization.OrgName
+                    });
+                }
+                Console.WriteLine("&&&&&& USERID = {0}******", User.IsInRole("Admin"));
+                return View(model);
+            } else {
+                var users = _context.ApplicationUser_Has_Protocols
                                 .Include(a => a.ApplicationUser)
                                 .Include(b => b.Protocol).ThenInclude(o => o.Organization)
                                 .Where(m => m.AppID == id).ToList();
-            if (User.IsInRole("Admin")){
-               users = _context.ApplicationUser_Has_Protocols
-                                .Include(a => a.ApplicationUser)
-                                .Include(b => b.Protocol).ThenInclude(o => o.Organization)
-                                .ToList();
+                var protocol = _context.Protocols.Include(p => p.Organization);
+                List<Protocol> protocols = await protocol.ToListAsync();
+                IndexViewModel model = new IndexViewModel();
+                model.list = new List<Prot>();
+                foreach (ApplicationUser_has_Protocol p in users)
+                {
+
+                    model.list.Add(new Prot
+                    {
+                        ProtocolId = p.ProtocolID,
+                        Description = p.Protocol.Description,
+                        OrgName = p.Protocol.Organization.OrgName
+                    });
+                }
+                Console.WriteLine("&&&&&& USERID = {0}******", User.IsInRole("Admin"));
+                return View(model);
             }
 
 
-            var protocol = _context.Protocols.Include(p => p.Organization);
-            List<Protocol> protocols = await protocol.ToListAsync();
-            IndexViewModel model = new IndexViewModel();
-            model.list = new List<Prot>();
-            foreach(ApplicationUser_has_Protocol p in users){
-                
-                model.list.Add(new Prot
-                {
-                    ProtocolId = p.ProtocolID,
-                    Description = p.Protocol.Description,
-                    OrgName = p.Protocol.Organization.OrgName
-                    });
-                }
-            Console.WriteLine("&&&&&& USERID = {0}******", User.IsInRole("Admin"));
-            return View(model);
+
         }
 
         // GET: Protocol/Details/5

@@ -11,8 +11,8 @@ using WebApplication5.Data;
 namespace WebApplication5.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180626205020_qwer")]
-    partial class qwer
+    [Migration("20180703153512_INIt")]
+    partial class INIt
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -33,34 +33,51 @@ namespace WebApplication5.Controllers
             }
             var user = await _userManager.GetUserAsync(User);
             var idd = user.AppID; // Get user id:
-            var users = _context.ApplicationUser_Has_Tasks
+
+            
+            if (User.IsInRole("Admin"))
+            {
+                var users = _context.Tasks
+                                 .Include(o => o.Protocol)
+                                 .ToList();
+                var task = _context.Tasks.Include(p => p.Protocol);
+                List<Models.Task> tasks = await task.ToListAsync();
+                IndexViewModel model = new IndexViewModel();
+                model.List = new List<Pot>();
+                foreach (Models.Task p in users)
+                {
+
+                    model.List.Add(new Pot
+                    {
+                        TaskId = p.Id,
+                        Description = p.Description,
+                        ProtocolDescription = p.Protocol.Description
+                    });
+                }
+                return View(model);
+            } else {
+                var users = _context.ApplicationUser_Has_Tasks
                                 .Include(a => a.ApplicationUser)
                                 .Include(b => b.Task).ThenInclude(o => o.Protocol)
                                 .Where(m => m.Task.ProtocolID == id && m.AppID == idd).ToList();
-
-            if (User.IsInRole("Admin"))
-            {
-                users = _context.ApplicationUser_Has_Tasks
-                                 .Include(a => a.ApplicationUser)
-                                 .Include(b => b.Task).ThenInclude(o => o.Protocol)
-                                 .ToList();
-            }
-
-            var task = _context.Tasks.Include(p => p.Protocol);
-            List<Models.Task> tasks = await task.ToListAsync();
-            IndexViewModel model = new IndexViewModel();
-            model.List = new List<Pot>();
-            foreach (ApplicationUser_has_Task p in users)
-            {
-
-                model.List.Add(new Pot
+                var task = _context.Tasks.Include(p => p.Protocol);
+                List<Models.Task> tasks = await task.ToListAsync();
+                IndexViewModel model = new IndexViewModel();
+                model.List = new List<Pot>();
+                foreach (ApplicationUser_has_Task p in users)
                 {
-                    TaskId = p.TaskID,
-                    Description = p.Task.Description,
-                    ProtocolDescription = p.Task.Protocol.Description
-                });
+
+                    model.List.Add(new Pot
+                    {
+                        TaskId = p.TaskID,
+                        Description = p.Task.Description,
+                        ProtocolDescription = p.Task.Protocol.Description
+                    });
+                }
+                return View(model);
             }
-            return View(model);
+
+
         }
 
         // GET: Task/Details/5

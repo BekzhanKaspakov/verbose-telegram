@@ -47,15 +47,6 @@ namespace WebApplication5.Controllers
 
             // Create test users
             
-                var newUser = new ApplicationUser()
-                {
-                    UserName = "admin",
-                    FirstName = "Admin",
-                    LastName = "User",
-                    Email = "xxx@xxx.net",
-                    PhoneNumber = "5551234567",
-                };
-                await _userManager.CreateAsync(newUser, "Password1");
             
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
