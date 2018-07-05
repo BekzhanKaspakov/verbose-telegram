@@ -112,7 +112,7 @@ namespace WebApplication5.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(nameof(Index),model);
             }
 
             var user = await _userManager.GetUserAsync(User);

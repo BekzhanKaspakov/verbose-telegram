@@ -227,7 +227,8 @@ namespace WebApplication5.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Deadline = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(maxLength: 50, nullable: false),
-                    ProtocolID = table.Column<int>(nullable: false)
+                    ProtocolID = table.Column<int>(nullable: false),
+                    Status = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

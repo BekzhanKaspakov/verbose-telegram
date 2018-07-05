@@ -49,9 +49,12 @@ namespace WebApplication5.Controllers
 
                     model.List.Add(new Pot
                     {
+                        Deadline = p.Deadline,
                         TaskId = p.Id,
                         Description = p.Description,
-                        ProtocolDescription = p.Protocol.Description
+                        ProtocolDescription = p.Protocol.Description,
+                        Status = p.Status
+                                               
                     });
                 }
                 return View(model);
@@ -69,9 +72,11 @@ namespace WebApplication5.Controllers
 
                     model.List.Add(new Pot
                     {
+                        Deadline = p.Task.Deadline,
                         TaskId = p.TaskID,
                         Description = p.Task.Description,
-                        ProtocolDescription = p.Task.Protocol.Description
+                        ProtocolDescription = p.Task.Protocol.Description,
+                        Status = p.Task.Status
                     });
                 }
                 return View(model);
@@ -79,7 +84,29 @@ namespace WebApplication5.Controllers
 
 
         }
+        // GET: Task/Details/5
+        public async Task<IActionResult> Complete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var task = await _context.Tasks
+                .Include(t => t.Protocol)
+                .SingleOrDefaultAsync(m => m.Id == id);
+            if (task == null)
+            {
+                return NotFound();
+            }
+            task.Status = true;
+            _context.Update(task);
+            await _context.SaveChangesAsync();
+            Console.WriteLine("~~~~~~~~~~ {0} ************", task.Status);
+
+
+            return RedirectToAction("Index", "Task", new { id = task.ProtocolID });
+        }
         // GET: Task/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -179,7 +206,7 @@ namespace WebApplication5.Controllers
                         await _context.SaveChangesAsync();
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Task", new { id = model.ProtocolID });
             }
             ////Redirect to "Create" I guess
             CreateViewModel mod = new CreateViewModel();

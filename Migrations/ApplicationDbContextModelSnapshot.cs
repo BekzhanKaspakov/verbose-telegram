@@ -264,6 +264,8 @@ namespace WebApplication5.Migrations
 
                     b.Property<int>("ProtocolID");
 
+                    b.Property<bool>("Status");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProtocolID");

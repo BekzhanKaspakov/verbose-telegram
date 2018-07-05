@@ -18,7 +18,7 @@ namespace WebApplication5.Models
         [Required]
         [StringLength(50)]
         public string Description { get; set; }
-
+        public bool Status { get; set; }
         public ICollection<ApplicationUser_has_Task> ApplicationUser_has_Tasks { get; set; }
 
         public Protocol Protocol { get; set; }

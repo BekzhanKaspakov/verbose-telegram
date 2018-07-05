@@ -44,6 +44,17 @@
                         @Html.DisplayFor(modelItem => item.ProtocolDescription)
                     </td>
                     <td>
+                        @if (item.Status)
+                        {
+                            <p style="color: greenyellow">Completed</p>
+                        }
+                        else
+                        {
+                            <p style="color: red">Incomplete</p>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Complete" asp-route-id="@item.TaskId">Complete</a> |
                         <a asp-action="Edit" asp-route-id="@item.TaskId">Edit</a> |
                         <a asp-action="Details" asp-route-id="@item.TaskId">Details</a> |
                         <a asp-action="Delete" asp-route-id="@item.TaskId">Delete</a>

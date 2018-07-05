@@ -11,7 +11,7 @@ using WebApplication5.Data;
 namespace WebApplication5.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180703153512_INIt")]
+    [Migration("20180704223226_INIt")]
     partial class INIt
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -264,6 +264,8 @@ namespace WebApplication5.Migrations
                         .HasMaxLength(50);
 
                     b.Property<int>("ProtocolID");
+
+                    b.Property<bool>("Status");
 
                     b.HasKey("Id");
 

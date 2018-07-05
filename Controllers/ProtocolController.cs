@@ -50,15 +50,19 @@ namespace WebApplication5.Controllers
                 Console.WriteLine("&&&&&& USERID = {0}******", User.IsInRole("Admin"));
                 return View(model);
             } else {
-                var users = _context.ApplicationUser_Has_Protocols
+                var users1 = _context.ApplicationUser_Has_Protocols
                                 .Include(a => a.ApplicationUser)
                                 .Include(b => b.Protocol).ThenInclude(o => o.Organization)
                                 .Where(m => m.AppID == id).ToList();
+                var users2 = _context.ApplicationUser_Has_Tasks
+                                     .Include(a => a.ApplicationUser)
+                                     .Include(b => b.Task).ThenInclude(o => o.Protocol).ThenInclude(d => d.Organization)
+                                     .Where(m => m.AppID == id ).ToList();
                 var protocol = _context.Protocols.Include(p => p.Organization);
                 List<Protocol> protocols = await protocol.ToListAsync();
                 IndexViewModel model = new IndexViewModel();
                 model.list = new List<Prot>();
-                foreach (ApplicationUser_has_Protocol p in users)
+                foreach (ApplicationUser_has_Protocol p in users1)
                 {
 
                     model.list.Add(new Prot
@@ -68,6 +72,19 @@ namespace WebApplication5.Controllers
                         OrgName = p.Protocol.Organization.OrgName
                     });
                 }
+                foreach (ApplicationUser_has_Task p in users2)
+                {
+                    int index = model.list.FindIndex(f => f.ProtocolId == p.Task.ProtocolID);
+                    if (index < 0 ){
+                    model.list.Add(new Prot
+                    {
+                            ProtocolId = p.Task.ProtocolID,
+                            Description = p.Task.Protocol.Description,
+                            OrgName = p.Task.Protocol.Organization.OrgName
+                    });
+                    }
+                }
+
                 Console.WriteLine("&&&&&& USERID = {0}******", User.IsInRole("Admin"));
                 return View(model);
             }
