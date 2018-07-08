@@ -53,7 +53,8 @@ namespace WebApplication5.Controllers
                         TaskId = p.Id,
                         Description = p.Description,
                         ProtocolDescription = p.Protocol.Description,
-                        Status = p.Status
+                        Status = p.Status,
+                        CompletionDateTime = p.CompletionDateTime
                                                
                     });
                 }
@@ -76,7 +77,9 @@ namespace WebApplication5.Controllers
                         TaskId = p.TaskID,
                         Description = p.Task.Description,
                         ProtocolDescription = p.Task.Protocol.Description,
-                        Status = p.Task.Status
+                        Status = p.Task.Status,
+                        CompletionDateTime = p.Task.CompletionDateTime
+
                     });
                 }
                 return View(model);
@@ -100,6 +103,7 @@ namespace WebApplication5.Controllers
                 return NotFound();
             }
             task.Status = true;
+            task.CompletionDateTime = new DateTime(DateTime.Now.Year,DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
             _context.Update(task);
             await _context.SaveChangesAsync();
             Console.WriteLine("~~~~~~~~~~ {0} ************", task.Status);
@@ -317,9 +321,15 @@ namespace WebApplication5.Controllers
         {
             var task = await _context.Tasks.SingleOrDefaultAsync(m => m.Id == id);
             _context.Tasks.Remove(task);
+            var widgets = _context.ApplicationUser_Has_Tasks
+                .Where(w => w.TaskID == id);
+
+            foreach (ApplicationUser_has_Task widget in widgets)
+            {
+                _context.ApplicationUser_Has_Tasks.Remove(widget);
+            }
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+            return RedirectToAction("Index", "Task", new { id });        }
 
         private bool TaskExists(int id)
         {

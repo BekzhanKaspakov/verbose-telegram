@@ -256,6 +256,8 @@ namespace WebApplication5.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("CompletionDateTime");
+
                     b.Property<DateTime>("Deadline");
 
                     b.Property<string>("Description")

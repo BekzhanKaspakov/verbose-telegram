@@ -11,8 +11,8 @@ using WebApplication5.Data;
 namespace WebApplication5.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180704223226_INIt")]
-    partial class INIt
+    [Migration("20180707184013_INIT")]
+    partial class INIT
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -256,6 +256,8 @@ namespace WebApplication5.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CompletionDateTime");
 
                     b.Property<DateTime>("Deadline");
 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace WebApplication5.Migrations
 {
-    public partial class INIt : Migration
+    public partial class INIT : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -225,6 +225,7 @@ namespace WebApplication5.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CompletionDateTime = table.Column<DateTime>(nullable: false),
                     Deadline = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(maxLength: 50, nullable: false),
                     ProtocolID = table.Column<int>(nullable: false),
